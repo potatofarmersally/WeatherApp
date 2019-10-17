@@ -11,6 +11,7 @@ class Title extends React.Component {
                     Please Enter a Zipcode to See the Current Weather.
                 </p>
             </div>
-        );
+        )
     }
 }
+export default Title;
