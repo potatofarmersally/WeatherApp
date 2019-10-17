@@ -16,14 +16,12 @@ class App extends React.Component{
     }
   }
 
+  //try it with axios calls next? 
   getWeatherAPI = async (e) => {
     const zipcode = e.target.elements.zipCode.value;
-    //console.log(zipcode);
     e.preventDefault();
     const api_call = await fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${zipcode}&appid=28d681e0e39e05fab60e5154a8b1fca4&units=imperial`);
     const response = await api_call.json();
-    console.log(response);
-    console.log("asdf");
     if(zipcode) {
       this.setState({
         location: response.name,
