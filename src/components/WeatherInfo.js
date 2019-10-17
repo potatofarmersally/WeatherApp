@@ -5,7 +5,7 @@ class WeatherInfo extends React.Component {
         return (
             <div className="weather-info">
                 {
-                    this.props.zipcode && 
+                    this.props.city && 
                     <p className="weather__key">
                         City:
                         <span className="weather__value">

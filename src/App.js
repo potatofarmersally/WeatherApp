@@ -1,39 +1,37 @@
 import React from 'react';
-import './App.css';
 import Title from "./components/Title";
 import Form from "./components/Form";
 import WeatherInfo from './components/WeatherInfo';
 
-const api_key = "28d681e0e39e05fab60e5154a8b1fca4";
 
 class App extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      location: "",
-      zipcode: 0,
-      temperature: 0,
-      humidity: 0, 
-      conditions: "",
-      error: ""
+      location: undefined,
+      temperature: undefined,
+      humidity: undefined, 
+      conditions: undefined,
+      error: undefined
     }
   }
 
-  getWeatherAPI = async(e) => {
-    const zipcode = e.target.elements.zipcode.value;
+  getWeatherAPI = async (e) => {
+    const zipcode = e.target.elements.zipCode.value;
+    //console.log(zipcode);
     e.preventDefault();
-    const api_call = await fetch(`http://api.openweathermap.org/data/2.5/weather?zip={zipcode}&appid=${api_key}`);
+    const api_call = await fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${zipcode}&appid=28d681e0e39e05fab60e5154a8b1fca4&units=imperial`);
     const response = await api_call.json();
     console.log(response);
+    console.log("asdf");
     if(zipcode) {
       this.setState({
+        location: response.name,
         temperature: response.main.temp,
-        city: response.name,
         humidity: response.main.humidity,
         conditions: response.weather[0].description,
         error: ""
       })
-      console.log(this.state.temperature);
     } else {
       this.setState({
         error: "Please enter a zip code"
@@ -44,15 +42,19 @@ class App extends React.Component{
   render() {
     return (
       <div>
-        <Title />
-        <Form loadWeather={this.getWeatherAPI}/>
-        <WeatherInfo>
-          city={this.state.city}
+        <div className="col-xs-5 title-container">
+          <Title />
+        </div>
+        <div className="col-xs-7 form-container">
+          <Form loadWeather={this.getWeatherAPI}/>
+        </div>
+        <WeatherInfo
+          city={this.state.location}
           temperature={this.state.temperature}
           humidity={this.state.humidity}
           conditions={this.state.conditions}
           error={this.state.error}
-        </WeatherInfo>
+        />
       </div>
     )
   }
